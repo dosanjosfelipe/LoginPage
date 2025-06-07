@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style/style.css">
+    <title>Página de Recuperar Senha</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="login-h1">Recuperar Senha</h1>
+        <div class="text">
+            <p>Enviamos um código para o email EMAIL. Digite-o no campo abaixo.</p>
+        </div>
+        
+        <div class="forms">
+            <form id="passwordForm">
+                <div class="datas">
+                    <input type="text" name="token" placeholder="Insira o código aqui" id="token">
+                </div>
+
+                <div class="submit-button">
+                    <input type="submit" name="submit" value="Verificar">
+                </div>
+            </form>
+            <div class="signup-button">
+                <a href="login.html">Voltar para página de login</a>
+            </div>
+        </div>
+    </div>
+    <script src="../static/script/script.js"></script>
+</body>
+</html>

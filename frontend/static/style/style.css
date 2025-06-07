@@ -1,0 +1,131 @@
+/* Importação de fonte moderna */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+}
+
+.text {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.forms form {
+    display: flex;
+    flex-direction: column;
+}
+
+.datas input[type="email"],
+.datas input[type="password"],
+.datas input[type="text"] {
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.3s;
+    width: 335px;
+}
+
+.datas input:focus {
+    border-color: #2575fc;
+    outline: none;
+}
+
+span {
+    margin-left: 5px;
+}
+.datas2 {
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 35px;
+    color: #555;
+}
+
+.datas2 a {
+    color: #2575fc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.datas2 a:hover {
+    color: #6a11cb;
+    text-decoration: underline;
+}
+
+.submit-button input[type="submit"] {
+    background-color: #2575fc;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 335px;
+}
+
+.submit-button input[type="submit"]:hover {
+    background-color: #1b5edb;
+}
+
+.signup-button {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup-button a {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.signup-button a:hover {
+    color: #6a11cb;
+    text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    .login-h1 {
+        font-size: 28px;
+    }
+}
