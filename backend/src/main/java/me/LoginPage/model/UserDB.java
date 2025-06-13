@@ -17,6 +17,7 @@ public class UserDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String name;
 
     @Email
@@ -25,6 +26,7 @@ public class UserDB {
     @Size(min = 8)
     private String password;
 
+    public Long getId() {return id;}
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}

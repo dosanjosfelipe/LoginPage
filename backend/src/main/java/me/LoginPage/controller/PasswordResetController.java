@@ -16,7 +16,7 @@ import me.LoginPage.service.PasswordResetTokenService;
 import me.LoginPage.service.UserService;
 
 @RestController
-@RequestMapping("/ResetPassword")
+@RequestMapping("/resetPassword")
 public class PasswordResetController {
     
     final UserService userService;
