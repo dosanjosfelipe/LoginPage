@@ -1,3 +1,26 @@
+// Verificar se o token jwt existe e logar automaticamente
+window.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname;
+
+    if (currentPath !== "/frontend/templates/index.html") {
+        const jwtToken = getCookie("jwt_token");
+
+        if (jwtToken) {
+            sendJwtTokenData(jwtToken.trim());
+        }
+    } else {
+        const userName = document.getElementById("userName")
+        userName.textContent = getCookie("user_name");
+    }
+});
+
+function exitAccount() {
+    document.cookie = "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = "/frontend/templates/login.html"
+
+}
+
 // Verificar campos do registro e mandar dados para o backend
 const registerForm = document.getElementById("registerForm");
 
@@ -106,7 +129,8 @@ async function sendRegisterData(name, email, password) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: "include"
         });
 
         if (statusResponse.status === 201) {
@@ -124,12 +148,13 @@ async function sendRegisterData(name, email, password) {
 }
 
 // Função para mandar dados do login para o backend
-async function sendLoginData(email, password) {
+async function sendLoginData(email, password, rememberMe) {
     const URL = "http://localhost:8080/login";
 
     const data = {
         email: email,
-        password: password
+        password: password,
+        rememberMe: rememberMe
     }
 
     try {
@@ -138,7 +163,8 @@ async function sendLoginData(email, password) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: "include"
         });
 
         if (statusResponse.status === 200) {
@@ -250,4 +276,40 @@ async function sendNewPasswordData(newPassword) {
     } catch (error) {
         alert("ERRO: " + error.message);
     }
+}
+
+async function sendJwtTokenData(jwtToken) {
+    const URL = "http://localhost:8080/autoLogin"
+
+    const data = {
+        jwtToken: jwtToken
+    }
+
+    try {
+        const statusResponse = await fetch(URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+            credentials: "include"
+        });
+
+        if (statusResponse.status === 200) {
+            window.location.href = "/frontend/templates/index.html";
+        }
+        
+    } catch (error) {
+        alert("ERRO: " + error.message);
+    }
+}
+
+// Obter Cookie
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+    }
+    return null;
 }

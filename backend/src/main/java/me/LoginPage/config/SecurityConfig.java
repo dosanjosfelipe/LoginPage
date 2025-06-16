@@ -27,7 +27,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login", "/register", "/resetPassword", "/newPassword", 
+                .requestMatchers("/login", "/register", "/resetPassword", "/newPassword", "/autoLogin", 
                 "/token", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                 .requestMatchers("/frontend/templates/**").permitAll()
                 .anyRequest().authenticated()
