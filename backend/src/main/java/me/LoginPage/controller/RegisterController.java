@@ -43,6 +43,6 @@ public class RegisterController {
             return ResponseEntity
             .status(HttpStatus.CONFLICT)
             .body("Esse email já está cadastrado.");
-        } 
+        }
     }
 }

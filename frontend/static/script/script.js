@@ -33,8 +33,9 @@ if (loginForm) {
 
     const email = document.getElementById("email").value.trim().toLowerCase().replace(/\s+/g, '');
     const password = document.getElementById("password").value.trim().replace(/\s+/g, '');
+    const rememberMe = document.getElementById("rememberMe").checked
 
-    sendLoginData(email, password)
+    sendLoginData(email, password, rememberMe)
 })
 }
 

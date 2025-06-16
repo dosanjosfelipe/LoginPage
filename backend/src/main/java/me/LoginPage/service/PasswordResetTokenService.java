@@ -20,7 +20,10 @@ public class PasswordResetTokenService {
     @Autowired
     private UserRepository userRepository;
 
-    public String generateToken(ResetPasswordDTO dto) {  
+    public String generateToken(ResetPasswordDTO dto) {
+    
+    tokenRepository.deleteAllExpiredTokens();
+
     UserDB user = userRepository.findByEmail(dto.getEmail())
         .orElseThrow(() -> new UsernameNotFoundException("Usuário com e-mail " + dto.getEmail() + " não encontrado."));
 
@@ -37,7 +40,7 @@ public class PasswordResetTokenService {
     resetToken.setToken(finalToken);
     resetToken.setUser(user);
     resetToken.setExpirationDate(LocalDateTime.now().plusMinutes(10));
-
+    
     tokenRepository.save(resetToken);
     return finalToken;
     }
