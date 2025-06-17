@@ -1,9 +1,11 @@
-HELP.md
+# Ignore arquivos gerados do Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
+HELP.md
+
+# Não ignorar pastas target dentro de src/main e src/test (caso existam builds específicos)
 !**/src/main/**/target/
 !**/src/test/**/target/
-application.properties 
 
 ### STS ###
 .apt_generated
@@ -32,3 +34,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar o arquivo de configuração original
+/src/main/resources/application.properties
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Arquivos binários e gerados
+*.class
+*.jar
+*.war
+*.ear
+
+# Configurações locais do sistema operacional
+.DS_Store
+Thumbs.db

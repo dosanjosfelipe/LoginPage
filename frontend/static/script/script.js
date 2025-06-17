@@ -1,245 +1,238 @@
-// Verificar se o token jwt existe e logar automaticamente
-window.addEventListener("DOMContentLoaded", () => {
+// ===============================
+//  Script Principal do LoginPage
+// ===============================
+
+window.addEventListener("DOMContentLoaded", async () => {
     const currentPath = window.location.pathname;
+    const jwtToken = getCookie("jwt_auth_token");
 
-    if (currentPath !== "/frontend/templates/index.html") {
-        const jwtToken = getCookie("jwt_token");
+    // Protege as rotas sensíveis
+    if (currentPath === "/frontend/templates/index.html") {
+        // Impede acesso sem estar logado
+        if (!jwtToken || !getCookie("user_name")) {
+            window.location.href = "/frontend/templates/login.html";
+            return;
+        }
 
-        if (jwtToken) {
-            sendJwtTokenData(jwtToken.trim());
+        // Exibe o nome do usuário na tela
+        const userName = document.getElementById("userName");
+        if (userName) {
+            userName.textContent = getCookie("user_name");
+        }
+
+    } else if (currentPath === "/frontend/templates/newPassword.html" ||
+               currentPath === "/frontend/templates/token.html") {
+
+        if (!getCookie("changing_password")) {
+            window.location.href = "/frontend/templates/login.html";
+            return;
+        }
+
+        const userEmail = document.getElementById("userEmail")
+        if (userEmail) {
+            userEmail.textContent =  decodeURIComponent(getCookie("user_email"));
         }
     } else {
-        const userName = document.getElementById("userName")
-        userName.textContent = getCookie("user_name");
+        // Tenta auto-login para outras rotas, se token estiver presente
+        if (jwtToken) {
+            await sendJwtTokenData(jwtToken.trim());
+        }
     }
 });
 
+// ===============================
+//    Lógica do botão de sair
+// ===============================
 function exitAccount() {
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/frontend/templates/login.html"
-
+    window.location.href = "/frontend/templates/login.html";
 }
 
-// Verificar campos do registro e mandar dados para o backend
+// ===============================
+//    Submissão de formulários
+// ===============================
+
+// Registro
 const registerForm = document.getElementById("registerForm");
-
 if (registerForm) {
-    registerForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+    registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim().toLowerCase().replace(/\s+/g, '');
-    const password = document.getElementById("password").value.trim().replace(/\s+/g, '');
-    const secondPassword = document.getElementById("secondPassword").value.trim().replace(/\s+/g, '');
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase().replace(/\s+/g, '');
+        const password = document.getElementById("password").value.trim();
+        const secondPassword = document.getElementById("secondPassword").value.trim();
 
-    if (name.length == 0 || email.length == 0 || password.length == 0 || secondPassword.length == 0) {
-        alert("Preencha todos os campos.");
-    } else if (name.length > 16) {
-        alert("O nome deve ter menos que 16 caracteres.")
-    } else if (password.length < 8) {
-        alert("A senha deve conter pelo menos 8 caracteres.");
-    } else if (password != secondPassword){
-        alert("As senhas não coincidem.")
-    } else {
-        sendRegisterData(name, email, password)
-    }
-})
+        if (!name || !email || !password || !secondPassword) {
+            alert("Preencha todos os campos.");
+        } else if (name.length > 16) {
+            alert("O nome deve ter menos que 16 caracteres.");
+        } else if (password.length < 8) {
+            alert("A senha deve conter pelo menos 8 caracteres.");
+        } else if (password !== secondPassword) {
+            alert("As senhas não coincidem.");
+        } else {
+            await sendRegisterData(name, email, password);
+        }
+    });
 }
 
-// Verificar campos do login e mandar dados para o backend
+// Login
 const loginForm = document.getElementById("loginForm");
-
 if (loginForm) {
-    loginForm.addEventListener("submit", function(event){
-    event.preventDefault();
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    const email = document.getElementById("email").value.trim().toLowerCase().replace(/\s+/g, '');
-    const password = document.getElementById("password").value.trim().replace(/\s+/g, '');
-    const rememberMe = document.getElementById("rememberMe").checked
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value.trim();
+        const rememberMe = document.getElementById("rememberMe").checked;
 
-    sendLoginData(email, password, rememberMe)
-})
+        await sendLoginData(email, password, rememberMe);
+    });
 }
 
-// Mandar email da recuperação de senha para o backend
+// Recuperar senha
 const passwordForm = document.getElementById("passwordForm");
-
 if (passwordForm) {
-    passwordForm.addEventListener("submit", function(event) {
-    event.preventDefault();
+    passwordForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    const email = document.getElementById("email").value.trim().toLowerCase().replace(/\s+/g, '');
-
-    sendEmailData(email);
-    })
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        await sendEmailData(email);
+    });
 }
 
-// Mandar token para o backend verificar
+// Verificação de token
 const tokenForm = document.getElementById("tokenForm");
-
 if (tokenForm) {
-    tokenForm.addEventListener("submit", function(event){
+    tokenForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-
         const token = document.getElementById("token").value.trim();
-
-        sendTokenData(token);
-    })
+        await sendTokenData(token);
+    });
 }
 
-// Mandar nova senha para o Backend
+// Nova senha
 const newPasswordForm = document.getElementById("newPasswordForm");
-
 if (newPasswordForm) {
-    newPasswordForm.addEventListener("submit", function(event){
+    newPasswordForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        
-        const newPassword = document.getElementById("newPassword").value.trim().replace(/\s+/g, '');
-        const secondNewPassword = document.getElementById("secondNewPassword").value.trim().replace(/\s+/g, '');
 
-        if (newPassword.length == 0 || secondNewPassword.length == 0) {
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const secondNewPassword = document.getElementById("secondNewPassword").value.trim();
+
+        if (!newPassword || !secondNewPassword) {
             alert("Preencha todos os campos.");
         } else if (newPassword.length < 8) {
             alert("A senha deve conter pelo menos 8 caracteres.");
-        } else if (newPassword != secondNewPassword){
-            alert("As senhas não coincidem.")
+        } else if (newPassword !== secondNewPassword) {
+            alert("As senhas não coincidem.");
         } else {
-            console.log("Senha que será enviada:", newPassword);
-            sendNewPasswordData(newPassword)
+            await sendNewPasswordData(newPassword);
         }
-    })
+    });
 }
 
-//* ======================================================================================
+// ===============================
+//     Funções de requisição
+// ===============================
 
-// Função para mandar dados do registro para o backend
 async function sendRegisterData(name, email, password) {
     const URL = "http://localhost:8080/register";
+    const data = { name, email, password };
 
-    const data = {
-        name: name,
-        email: email,
-        password: password
-    };
-    
     try {
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
         });
 
-        if (statusResponse.status === 201) {
+        if (res.status === 201) {
             alert("Cadastrado com sucesso!");
             window.location.href = "/frontend/templates/login.html";
-        } else if (statusResponse.status === 409) {
+        } else if (res.status === 409) {
             alert("Esse email já está cadastrado.");
         } else {
-            throw new Error("Erro ao enviar dados: " + statusResponse.status);
+            throw new Error("Erro: " + res.status);
         }
-
     } catch (error) {
         alert("ERRO: " + error.message);
-    } 
+    }
 }
 
-// Função para mandar dados do login para o backend
 async function sendLoginData(email, password, rememberMe) {
     const URL = "http://localhost:8080/login";
-
-    const data = {
-        email: email,
-        password: password,
-        rememberMe: rememberMe
-    }
+    const data = { email, password, rememberMe };
 
     try {
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
         });
 
-        if (statusResponse.status === 200) {
-            window.location.href = "/frontend/templates/index.html"
-        } else if (statusResponse.status === 401) {
-            alert("Email ou Senha errados.")
+        if (res.status === 200) {
+            window.location.href = "/frontend/templates/index.html";
+        } else if (res.status === 401) {
+            alert("Email ou senha incorretos.");
         } else {
-            throw new Error("Erro ao enviar dados: " + statusResponse.status);
+            throw new Error("Erro: " + res.status);
         }
-
     } catch (error) {
         alert("ERRO: " + error.message);
     }
 }
 
-// Função para mandar dados do recuperar senha para o backend
 async function sendEmailData(email) {
     const URL = "http://localhost:8080/resetPassword";
-
-    const data = {
-        email: email
-    };
+    const data = { email };
 
     try {
-        
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
         });
 
-        if (statusResponse.status === 200) {
-                window.location.href = "/frontend/templates/token.html"
-            } else if (statusResponse.status === 401) {
-                alert("Esse email não está no nosso banco de dados.")
-            } else {
-                throw new Error("Erro ao enviar dados: " + statusResponse.status);
-            }
-
+        if (res.status === 200) {
+            window.location.href = "/frontend/templates/token.html";
+        } else if (res.status === 401) {
+            alert("Esse email não está cadastrado.");
+        } else {
+            throw new Error("Erro: " + res.status);
+        }
     } catch (error) {
         alert("ERRO: " + error.message);
     }
 }
-
-// Função para enviar Token para o backend
 
 async function sendTokenData(token) {
     const URL = "http://localhost:8080/token";
-
-    const data = {
-        token: token
-    }
+    const data = { token };
 
     try {
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
-        })
-        
-        if (statusResponse.status === 200) {
-            window.location.href = "/frontend/templates/newPassword.html"
-        } else if (statusResponse.status === 401) {
-            const message = await statusResponse.text();
-            alert(message)
-        } else {
-            throw new Error("Erro ao enviar dados: " + statusResponse.status);
-        }
+        });
 
+        if (res.status === 200) {
+            window.location.href = "/frontend/templates/newPassword.html";
+            document.cookie = "user_email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        } else if (res.status === 401) {
+            const msg = await res.text();
+            alert(msg);
+        } else {
+            throw new Error("Erro: " + res.status);
+        }
     } catch (error) {
         alert("ERRO: " + error.message);
     }
@@ -247,64 +240,52 @@ async function sendTokenData(token) {
 
 async function sendNewPasswordData(newPassword) {
     const URL = "http://localhost:8080/newPassword";
-
-    const data = {
-        newPassword: newPassword
-    }
-    console.log(newPassword)
+    const data = { newPassword };
 
     try {
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
-        })
-        
-        if (statusResponse.status === 200) {
-            window.location.href = "/frontend/templates/login.html"
-            document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        } else if (statusResponse.status === 500) {
-            const message = await statusResponse.text();
-            alert(message)
-        } else {
-            throw new Error("Erro ao enviar dados: " + statusResponse.status);
-        }
+        });
 
+        if (res.status === 200) {
+            document.cookie = "changing_password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "/frontend/templates/login.html";
+        } else {
+            const msg = await res.text();
+            alert(msg);
+        }
     } catch (error) {
         alert("ERRO: " + error.message);
     }
 }
 
 async function sendJwtTokenData(jwtToken) {
-    const URL = "http://localhost:8080/autoLogin"
-
-    const data = {
-        jwtToken: jwtToken
-    }
+    const URL = "http://localhost:8080/autoLogin";
+    const data = { jwtToken };
 
     try {
-        const statusResponse = await fetch(URL, {
+        const res = await fetch(URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
             credentials: "include"
         });
 
-        if (statusResponse.status === 200) {
+        if (res.status === 200) {
             window.location.href = "/frontend/templates/index.html";
         }
-        
     } catch (error) {
         alert("ERRO: " + error.message);
     }
 }
 
-// Obter Cookie
+// ===============================
+//          ler cookie
+// ===============================
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

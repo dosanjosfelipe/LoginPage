@@ -1,10 +1,12 @@
 package me.LoginPage.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,48 +27,56 @@ public class NewPasswordController {
     final UserRepository userRepository;
     final CookieService cookieService;
     final PasswordResetTokenRepos passwordResetTokenRepos;
+    final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public NewPasswordController(UserService userService, UserRepository userRepository, CookieService cookieService,
-     PasswordResetTokenRepos passwordResetTokenRepos) {
+    public NewPasswordController(UserService userService,UserRepository userRepository,CookieService cookieService,
+    PasswordResetTokenRepos passwordResetTokenRepos, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.cookieService = cookieService;
         this.passwordResetTokenRepos = passwordResetTokenRepos;
-        
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
-    public ResponseEntity<String> setNewPassword(@RequestBody NewPasswordDTO dto, HttpServletRequest request) 
-    throws UnsupportedEncodingException {
+    public ResponseEntity<?> setNewPassword(@RequestBody NewPasswordDTO dto, HttpServletRequest request) 
+            throws UnsupportedEncodingException {
 
         String userIdString = CookieService.getCookie(request, "UserId");
 
         if (userIdString == null || userIdString.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cookie 'userId' está ausente ou vazio");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Cookie 'UserId' está ausente ou vazio"));
         }
 
         Long userId;
         try {
             userId = Long.parseLong(userIdString);
         } catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Valor do cookie 'userId' inválido");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Valor do cookie 'UserId' inválido"));
         }
 
-        Optional<UserDB> userOPT = userRepository.findById(userId);
-        UserDB user = userOPT.get();
+        Optional<UserDB> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Usuário não encontrado."));
+        }
 
         try {
-            userRepository.updatePassword(user.getId(), dto.getNewPassword());
+            String hashedPassword = passwordEncoder.encode(dto.getNewPassword());
+
+            userRepository.updatePassword(userId, hashedPassword);
+
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao atualizar a senha no banco de dados.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Erro ao atualizar a senha no banco de dados."));
         }
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header("Location", "/frontend/templates/login.html")
-                .body("Senha alterada.");
+        return ResponseEntity.ok(Map.of(
+            "message", "Senha atualizada com sucesso."
+        ));
     }
 }
+

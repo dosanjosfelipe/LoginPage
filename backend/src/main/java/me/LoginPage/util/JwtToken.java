@@ -20,39 +20,36 @@ public class JwtToken {
     @Value("${jwt.expiration}")
     private Long expirationTime;
 
-
     private Key getSigningKey() {
+        if (secret.length() < 32) {
+            throw new IllegalArgumentException("JWT secret key must be at least 32 characters long.");
+        }
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
-
 
     public String generateToken(String userEmail) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationTime);
 
-        return Jwts.builder().setSubject(userEmail).setIssuedAt(now).setExpiration(expiration)
-        .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+        return Jwts.builder()
+                .setSubject(userEmail)
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
-
-    public String getSubject(String token) {
-        return parseClaims(token).getBody().getSubject();
-    }
-
-
-    public String getEmailFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
-        .getBody().getSubject();
-    }
-
-
-    public Boolean isTokenValid(String token) {
+    public boolean isTokenValid(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public String getEmailFromToken(String token) {
+        return parseClaims(token).getBody().getSubject();
     }
 
     private Jws<Claims> parseClaims(String token) {

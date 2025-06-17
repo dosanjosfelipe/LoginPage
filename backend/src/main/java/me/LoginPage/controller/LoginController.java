@@ -1,6 +1,7 @@
 package me.LoginPage.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,48 +17,53 @@ import me.LoginPage.repository.UserRepository;
 import me.LoginPage.service.CookieService;
 import me.LoginPage.service.UserService;
 import me.LoginPage.util.JwtToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/login")
 public class LoginController {
     
+    final PasswordEncoder passwordEncoder;
     final UserService userService;
     final CookieService cookieService;
     final UserRepository userRepository;
     final JwtToken jwtToken;
 
     @Autowired
-    public LoginController(UserService userService, CookieService cookieService, UserRepository userRepository, JwtToken jwtToken) {
+    public LoginController(UserService userService, CookieService cookieService, UserRepository userRepository, 
+    JwtToken jwtToken, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.cookieService = cookieService;
         this.userRepository = userRepository;
         this.jwtToken = jwtToken;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Chama a função de verificar o usuário e criar token e retorna uma resposta para o frontend
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody LoginDTO dto, HttpServletResponse response) 
-        throws UnsupportedEncodingException {
-        Boolean result = userService.verifyLoginUser(dto);
-        Boolean rememberMe = dto.getRememberMe();
+    public ResponseEntity<?> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws UnsupportedEncodingException {
 
-        Optional<UserDB> user = userRepository.findByEmail(dto.getEmail());
+        Optional<UserDB> userOpt = userRepository.findByEmail(dto.getEmail());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha incorretos.");
+        }
 
-        if (rememberMe) {
-            String token = jwtToken.generateToken(dto.getEmail());
-            CookieService.setCookie(response, "jwt_token", token, 7889280);
+        UserDB user = userOpt.get();
+        String hashedPassword = user.getPassword();
+
+        if (!passwordEncoder.matches(dto.getPassword(), hashedPassword)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha incorretos.");
         }
-        
-        if (result) {
-            CookieService.setCookie(response, "user_name", user.get().getName(), 7889280);
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .header("Location", "/frontend/templates/index.html")
-            .body("Usuário está no banco de dados!");
-        } else {
-            return ResponseEntity
-            .status(HttpStatus.UNAUTHORIZED)
-            .body("Usuário não está no banco de dados.");
-        }
+
+        String token = jwtToken.generateToken(dto.getEmail());
+        int maxAge = dto.getRememberMe() ? 7889280 : -1;
+
+        CookieService.setCookie(response, "jwt_auth_token", token, maxAge);
+        CookieService.setCookie(response, "user_name", user.getName(), maxAge);
+
+        return ResponseEntity.ok(Map.of(
+            "message", "Login realizado com sucesso",
+            "userName", user.getName()
+        ));
     }
 }
