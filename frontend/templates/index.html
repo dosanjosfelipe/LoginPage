@@ -36,6 +36,7 @@
     button {
         margin-left: 47%;
         margin-bottom: 20px;
+        margin-top: 50px;
         font-size: 1.5rem;
         font-weight: 900;
         background: linear-gradient(90deg, #15b5ff, #2921ff, #7100d3, #dc1fed);
@@ -57,6 +58,21 @@
         font-size: 1.6rem;
         transform: scale(1.05);
         
+    }
+
+    p {
+        background: linear-gradient(90deg, #15fffb, #21ff28, #b3d300, #edb31f);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-top: 50px;
+        animation: gradientAnimation 6s ease infinite;
+        background-size: 300% 300%;
+        position: relative;
+        z-index: 2;
+        user-select: none;  
     }
 
     @keyframes gradientAnimation {
@@ -123,9 +139,13 @@
         <div class="sparkle" style="left: 90%; animation-duration: 3.7s; animation-delay: 0.3s;"></div>
     </div>
 
-    <h1>Seja bem-vindo(a) <span id="userName"></span></h1>
-    
+    <h1>Seja bem-vindo(a) <span id="userName"></span>!</h1>
+
+    <p><a href="https://github.com/dosanjosfelipe/LoginPage" target="_blank">Clique aqui para acessar esse 
+        <br> projeto no GitHub!</a></p>
+
     <button id="exit" onclick=exitAccount()>SAIR</button>
+    
     
 </body>
 </html>
