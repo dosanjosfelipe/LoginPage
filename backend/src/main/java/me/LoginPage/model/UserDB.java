@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import lombok.NoArgsConstructor;
 
 //Tabela de usuários no banco de dados
@@ -17,13 +16,11 @@ public class UserDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
 
     @Email
     private String email;
 
-    @Size(min = 8)
     private String password;
 
     public Long getId() {return id;}

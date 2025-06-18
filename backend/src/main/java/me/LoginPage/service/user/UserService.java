@@ -1,11 +1,12 @@
-package me.LoginPage.service;
+package me.LoginPage.service.user;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import me.LoginPage.dto.LoginDTO;
-import me.LoginPage.dto.RegisterUserDTO;
-import me.LoginPage.dto.ResetPasswordDTO;
+
+import me.LoginPage.dto.auth.LoginDTO;
+import me.LoginPage.dto.auth.RegisterUserDTO;
+import me.LoginPage.dto.recoveryPassword.ResetPasswordDTO;
 import me.LoginPage.mapper.RegisterUserMapper;
 import me.LoginPage.model.UserDB;
 import me.LoginPage.repository.UserRepository;

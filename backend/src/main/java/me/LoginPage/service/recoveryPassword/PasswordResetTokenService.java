@@ -1,11 +1,11 @@
-package me.LoginPage.service;
+package me.LoginPage.service.recoveryPassword;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import me.LoginPage.model.UserDB;
-import me.LoginPage.dto.ResetPasswordDTO;
+import me.LoginPage.dto.recoveryPassword.ResetPasswordDTO;
 import me.LoginPage.model.PasswordResetToken;
 import me.LoginPage.repository.UserRepository;
 import me.LoginPage.repository.PasswordResetTokenRepos;

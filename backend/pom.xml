@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>me.LoginPage</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>login.app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>login.app</name>
 	<description>A login page</description>
 	<url/>
 	<licenses>

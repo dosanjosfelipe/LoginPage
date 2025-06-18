@@ -12,10 +12,11 @@
         <div class="forms">
             <form id="registerForm">
                 <div class="datas">
-                    <input type="text" name="name" placeholder="Nome" id="name">
-                    <input type="email" name="email" placeholder="Email" id="email">
-                    <input type="password" name="password" placeholder="Senha" id="password">
-                    <input type="password" name="secondPassword" placeholder="Confirmar senha" id="secondPassword">
+                    <input type="text" name="name" placeholder="Nome" id="name" autocomplete="username">
+                    <input type="email" name="email" placeholder="Email" id="email" autocomplete="email">
+                    <input type="password" name="password" placeholder="Senha" id="password" autocomplete="new-password">
+                    <input type="password" name="secondPassword" placeholder="Confirmar senha" id="secondPassword" 
+                    autocomplete="new-password">
                 </div>
 
                 <div class="submit-button">
@@ -27,6 +28,9 @@
             </div>
         </div>
     </div>
-    <script src="../static/script/script.js"></script>
+
+    <script src="../static/script/main.js"></script>
+    <script src="../static/script/api.js"></script>
+    <script src="../static/script/formHandlers.js"></script>
 </body>
 </html>

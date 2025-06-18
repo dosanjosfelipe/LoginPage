@@ -1,4 +1,4 @@
-package me.LoginPage.controller;
+package me.LoginPage.controller.auth;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
-import me.LoginPage.dto.LoginDTO;
+import me.LoginPage.dto.auth.LoginDTO;
 import me.LoginPage.model.UserDB;
 import me.LoginPage.repository.UserRepository;
-import me.LoginPage.service.CookieService;
-import me.LoginPage.service.UserService;
-import me.LoginPage.util.JwtToken;
+import me.LoginPage.service.cookie.CookieService;
+import me.LoginPage.service.user.UserService;
+import me.LoginPage.util.jwt.JwtToken;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController

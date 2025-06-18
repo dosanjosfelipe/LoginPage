@@ -1,4 +1,4 @@
-package me.LoginPage.dto;
+package me.LoginPage.dto.auth;
 
 public class LoginDTO {
     private String email;

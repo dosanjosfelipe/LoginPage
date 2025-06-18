@@ -1,4 +1,4 @@
-package me.LoginPage.dto;
+package me.LoginPage.dto.auth;
 
 // Transforma o Json com os dados do usuario em variaveis para serem convertidas em dados do banco de dados
 public class RegisterUserDTO {

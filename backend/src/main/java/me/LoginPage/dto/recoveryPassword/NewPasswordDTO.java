@@ -1,4 +1,4 @@
-package me.LoginPage.dto;
+package me.LoginPage.dto.recoveryPassword;
 
 public class NewPasswordDTO {
     private String newPassword;

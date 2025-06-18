@@ -1,4 +1,4 @@
-package me.LoginPage.util;
+package me.LoginPage.util.jwt;
 
 import java.security.Key;
 import java.util.Date;

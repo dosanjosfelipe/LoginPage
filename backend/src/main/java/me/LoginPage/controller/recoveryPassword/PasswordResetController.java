@@ -1,4 +1,4 @@
-package me.LoginPage.controller;
+package me.LoginPage.controller.recoveryPassword;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
-import me.LoginPage.dto.ResetPasswordDTO;
-import me.LoginPage.service.CookieService;
-import me.LoginPage.service.EmailService;
-import me.LoginPage.service.PasswordResetTokenService;
-import me.LoginPage.service.UserService;
+import me.LoginPage.dto.recoveryPassword.ResetPasswordDTO;
+import me.LoginPage.service.cookie.CookieService;
+import me.LoginPage.service.email.EmailService;
+import me.LoginPage.service.recoveryPassword.PasswordResetTokenService;
+import me.LoginPage.service.user.UserService;
 
 @RestController
 @RequestMapping("/resetPassword")

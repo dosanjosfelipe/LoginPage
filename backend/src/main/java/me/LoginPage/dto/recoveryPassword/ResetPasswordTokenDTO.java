@@ -1,4 +1,4 @@
-package me.LoginPage.dto;
+package me.LoginPage.dto.recoveryPassword;
 
 import java.util.Date;
 

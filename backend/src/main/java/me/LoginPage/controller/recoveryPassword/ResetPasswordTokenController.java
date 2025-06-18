@@ -1,4 +1,4 @@
-package me.LoginPage.controller;
+package me.LoginPage.controller.recoveryPassword;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
-import me.LoginPage.dto.ResetPasswordTokenDTO;
+import me.LoginPage.dto.recoveryPassword.ResetPasswordTokenDTO;
 import me.LoginPage.model.PasswordResetToken;
 import me.LoginPage.model.UserDB;
 import me.LoginPage.repository.PasswordResetTokenRepos;
 import me.LoginPage.repository.UserRepository;
-import me.LoginPage.service.CookieService;
-import me.LoginPage.service.UserService;
+import me.LoginPage.service.cookie.CookieService;
+import me.LoginPage.service.user.UserService;
 
 
 @RestController
 @RequestMapping("/token") 
-public class TokenController {
+public class ResetPasswordTokenController {
 
     final CookieService cookieService;
     final UserService userService;
@@ -31,7 +31,7 @@ public class TokenController {
     final UserRepository userRepository;
 
     @Autowired
-    public TokenController(UserService userService, PasswordResetTokenRepos passwordResetTokenRepos, 
+    public ResetPasswordTokenController(UserService userService, PasswordResetTokenRepos passwordResetTokenRepos, 
     UserRepository userRepository, CookieService cookieService) {
         this.userService = userService;
         this.passwordResetTokenRepos = passwordResetTokenRepos;

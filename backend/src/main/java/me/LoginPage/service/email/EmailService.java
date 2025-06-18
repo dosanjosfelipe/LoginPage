@@ -1,4 +1,4 @@
-package me.LoginPage.service;
+package me.LoginPage.service.email;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import me.LoginPage.util.HtmlLoader;
+import me.LoginPage.util.loaders.HtmlLoader;
 
 @Service
 public class EmailService {

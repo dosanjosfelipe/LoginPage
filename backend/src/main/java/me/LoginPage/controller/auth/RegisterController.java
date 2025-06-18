@@ -1,4 +1,4 @@
-package me.LoginPage.controller;
+package me.LoginPage.controller.auth;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.mail.MessagingException;
-import me.LoginPage.dto.RegisterUserDTO;
-import me.LoginPage.service.EmailService;
-import me.LoginPage.service.UserService;
+import me.LoginPage.dto.auth.RegisterUserDTO;
+import me.LoginPage.service.email.EmailService;
+import me.LoginPage.service.user.UserService;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController

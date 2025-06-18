@@ -1,4 +1,4 @@
-package me.LoginPage.service;
+package me.LoginPage.service.cookie;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

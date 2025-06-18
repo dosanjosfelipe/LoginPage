@@ -1,4 +1,4 @@
-package me.LoginPage.util;
+package me.LoginPage.util.jwt;
 
 import java.io.IOException;
 import java.util.List;

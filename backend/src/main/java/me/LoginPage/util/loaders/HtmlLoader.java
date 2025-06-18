@@ -1,4 +1,4 @@
-package me.LoginPage.util;
+package me.LoginPage.util.loaders;
 
 import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;

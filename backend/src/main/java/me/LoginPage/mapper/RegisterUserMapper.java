@@ -1,7 +1,8 @@
 package me.LoginPage.mapper;
 
 import org.springframework.stereotype.Component;
-import me.LoginPage.dto.RegisterUserDTO;
+
+import me.LoginPage.dto.auth.RegisterUserDTO;
 import me.LoginPage.model.UserDB;
 
 // Transforma o DTO em um usuário do banco de dados

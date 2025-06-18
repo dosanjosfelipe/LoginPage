@@ -1,4 +1,4 @@
-package me.LoginPage.controller;
+package me.LoginPage.controller.recoveryPassword;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
-import me.LoginPage.dto.NewPasswordDTO;
+import me.LoginPage.dto.recoveryPassword.NewPasswordDTO;
 import me.LoginPage.model.UserDB;
 import me.LoginPage.repository.PasswordResetTokenRepos;
 import me.LoginPage.repository.UserRepository;
-import me.LoginPage.service.UserService;
-import me.LoginPage.service.CookieService;
+import me.LoginPage.service.cookie.CookieService;
+import me.LoginPage.service.user.UserService;
 
 @RestController
 @RequestMapping("/newPassword")
