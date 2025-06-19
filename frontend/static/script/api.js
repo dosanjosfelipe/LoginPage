@@ -37,7 +37,7 @@ async function sendLoginData(email, password, rememberMe) {
         });
 
         if (res.status === 200) {
-            window.location.href = "/frontend/templates/index.html";
+            window.location.href = "/frontend/templates/dashboard.html";
         } else if (res.status === 401) {
             alert("Email ou senha incorretos.");
         } else {
@@ -115,7 +115,6 @@ async function sendNewPasswordData(newPassword) {
         });
 
         if (res.status === 200) {
-            console.log("200 AAAAAAAAAAA")
             document.cookie = "changing_password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.href = "/frontend/templates/login.html";
@@ -142,7 +141,7 @@ async function sendJwtTokenData(jwtToken) {
         });
 
         if (res.status === 200) {
-            window.location.href = "/frontend/templates/index.html";
+            window.location.href = "/frontend/templates/dashboard.html";
         }
     } catch (error) {
         alert("ERRO: " + error.message);

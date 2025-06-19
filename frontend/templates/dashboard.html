@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+</head>
+<link rel="stylesheet" href="../static/style/index.css">
+<body>
+    <script
+        src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+        type="module"
+    ></script>
+    <script src="../static/script/main.js"></script>
+
+    <header>
+        <div class="logo">
+            <p>LoginPage</p>
+            <p class="top">Dashboard</p>
+        </div>
+    </header>
+    <div class="left-side">
+        <h1>Seja bem-vindo(a) <span id="userName"></span>!</h1>
+        <h2>Obrigado por testar! <a href="https://github.com/dosanjosfelipe/LoginPage">Clique aqui para abrir esse projeto no github.</a></h2>
+        <div class="links">
+                <button id="exit" onclick=exitAccount()>Sair</button>
+        </div>
+    </div>
+    <div class="right-side">
+        <dotlottie-player
+            src="https://lottie.host/e1591e28-8df5-4ede-8f6b-a55ca0fcd22f/XSOn3kS4l8.lottie"
+            background="transparent"
+            speed="1"
+            style="width: 650px; height: 650px"
+            loop
+            autoplay
+        ></dotlottie-player>
+    </div>
+</body>
+</html>

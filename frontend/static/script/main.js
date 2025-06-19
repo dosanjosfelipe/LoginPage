@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const currentPath = window.location.pathname;
     const jwtToken = getCookie("jwt_auth_token");
 
-    if (currentPath === "/frontend/templates/index.html") {
+    if (currentPath === "/frontend/templates/dashboard.html") {
         if (!jwtToken || !getCookie("user_name")) {
             window.location.href = "/frontend/templates/login.html";
             return;
@@ -35,6 +35,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 function exitAccount() {
     document.cookie = "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "changing_password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = "/frontend/templates/login.html";
 }
 

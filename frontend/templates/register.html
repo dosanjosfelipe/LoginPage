@@ -7,25 +7,41 @@
     <title>Página de Registro</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="login-h1">Criar Conta</h1>
-        <div class="forms">
-            <form id="registerForm">
-                <div class="datas">
-                    <input type="text" name="name" placeholder="Nome" id="name" autocomplete="username">
-                    <input type="email" name="email" placeholder="Email" id="email" autocomplete="email">
-                    <input type="password" name="password" placeholder="Senha" id="password" autocomplete="new-password">
-                    <input type="password" name="secondPassword" placeholder="Confirmar senha" id="secondPassword" 
-                    autocomplete="new-password">
-                </div>
+    <script
+        src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+        type="module"
+    ></script>
+    <div class="sides-container">
+        <div class="left-side">
+            <h1 class="login-h1">Registre-se</h1>
+            <div class="forms">
+                <form id="newPasswordForm">
+                    <div class="datas">
+                        <input type="text" name="name" placeholder="Nome" id="name" autocomplete="username">
+                        <input type="email" name="email" placeholder="Email" id="email" autocomplete="email">
+                        <input type="password" name="password" placeholder="Senha" id="password" autocomplete="new-password">
+                        <input type="password" name="secondPassword" placeholder="Confirmar senha" id="secondPassword" 
+                        autocomplete="new-password">
+                    </div>
 
-                <div class="submit-button">
-                    <input type="submit" name="submit" value="Cadastrar">
+                    <div class="submit-button">
+                        <input type="submit" name="submit" value="Redefinir">
+                    </div>
+                </form>
+                <div class="signup-button">
+                    <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
                 </div>
-            </form>
-            <div class="signup-button">
-                    <p>Já tem um conta? <a href="login.html">Entre aqui</a></p>
             </div>
+        </div>
+        <div class="right-side">
+            <dotlottie-player
+                src="https://lottie.host/b8ccff04-a4d1-4c1d-abe6-c224ae278645/5bmVJ48d0l.json"
+                background="transparent"
+                speed="1"
+                style="width: 450px; height: 450px"
+                loop
+                autoplay
+            ></dotlottie-player>
         </div>
     </div>
 
@@ -34,3 +50,5 @@
     <script src="../static/script/formHandlers.js"></script>
 </body>
 </html>
+
+

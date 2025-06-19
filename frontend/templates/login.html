@@ -7,33 +7,49 @@
     <title>Página de Login</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="login-h1">Entrar</h1>
-        <div class="forms">
-            <form id="loginForm">
-                <div class="datas">
-                    <input type="email" name="email" placeholder="Email" id="email" autocomplete="email">
-                    <input type="password" name="password" placeholder="Senha" id="password" autocomplete="current-password">
-                </div>
+    <script
+        src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+        type="module"
+    ></script>
+    <div class="sides-container">
+        <div class="left-side">
+            <h1 class="login-h1">Entrar</h1>
+            <div class="forms">
+                <form id="loginForm">
+                    <div class="datas">
+                        <input type="email" name="email" placeholder="Email" id="email" autocomplete="email">
+                        <input type="password" name="password" placeholder="Senha" id="password" autocomplete="current-password">
+                    </div>
 
-                <div class="datas2">
-                    <span>
-                        <input type="checkbox" id="rememberMe" name="remember">
-                        <label for="rememberMe">Lembrar de mim</label>
-                    </span>
-                    <a href="password.html">Esqueceu sua senha?</a>
-                </div>
+                    <div class="datas2">
+                        <span>
+                            <input type="checkbox" id="rememberMe" name="remember">
+                            <label for="rememberMe">Lembrar de mim</label>
+                        </span>
+                        <a href="password.html">Esqueceu sua senha?</a>
+                    </div>
 
-                <div class="submit-button">
-                    <input type="submit" name="submit" value="Entrar">
+                    <div class="submit-button">
+                        <input type="submit" name="submit" value="Entrar">
+                    </div>
+                </form>
+                <div class="signup-button">
+                    <p>Não tem uma conta? <a href="register.html">Registre-se</a></p>
                 </div>
-            </form>
-            <div class="signup-button">
-                <p>Não tem uma conta? <a href="register.html">Registre-se</a></p>
             </div>
         </div>
+        <div class="right-side">
+            <dotlottie-player
+                src="https://lottie.host/107d7fda-4ea1-4c55-8bdd-e536c4ff30a7/zIifEYCiuc.lottie"
+                background="transparent"
+                speed="1"
+                style="width: 450px; height: 450px"
+                loop
+                autoplay
+            ></dotlottie-player>
+        </div>
     </div>
-    
+
     <script src="../static/script/main.js"></script>
     <script src="../static/script/api.js"></script>
     <script src="../static/script/formHandlers.js"></script>

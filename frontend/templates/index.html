@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Home</title>
-<link rel="stylesheet" href="/frontend/static/style/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
 </head>
+<link rel="stylesheet" href="../static/style/index.css">
 <body>
+    <script
+        src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+        type="module"
+    ></script>
     <script src="../static/script/main.js"></script>
-    <div class="sparkles">
-        <div class="sparkle" style="left: 10%; animation-duration: 4s; animation-delay: 0s;"></div>
-        <div class="sparkle" style="left: 20%; animation-duration: 5s; animation-delay: 1s;"></div>
-        <div class="sparkle" style="left: 35%; animation-duration: 3.5s; animation-delay: 0.5s;"></div>
-        <div class="sparkle" style="left: 50%; animation-duration: 4.5s; animation-delay: 1.5s;"></div>
-        <div class="sparkle" style="left: 65%; animation-duration: 3.8s; animation-delay: 0.8s;"></div>
-        <div class="sparkle" style="left: 80%; animation-duration: 4.2s; animation-delay: 1.2s;"></div>
-        <div class="sparkle" style="left: 90%; animation-duration: 3.7s; animation-delay: 0.3s;"></div>
+
+    <header>
+        <div class="logo">
+            <p>LoginPage</p>
+            <p class="top">Home</p>
+        </div>
+        <div class="navegation">
+            <nav>
+                <a href="https://github.com/dosanjosfelipe" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/dosanjos-felipe/" target="_blank">LinkedIn</a>
+            </nav>
+        </div>
+    </header>
+    <div class="left-side">
+        <h1>O <span>LoginPage</span> é um projeto pessoal para portfólio!</h1>
+        <h2>Ele é um site de cadastro e login usando Java e SpringBoot, com recursos de login, registro, 
+            recuperação de senha, token de autentificação e criptografia.</h2>
+        <div class="links">
+            <a href="login.html">Ir para login</a>
+            <a href="register.html">Ir para cadastro</a>
+        </div>
     </div>
-
-    <h1>Seja bem-vindo(a) <span id="userName"></span>!</h1>
-
-    <p><a href="https://github.com/dosanjosfelipe/LoginPage" target="_blank">Clique aqui para acessar esse 
-        <br> projeto no GitHub!</a></p>
-
-    <button id="exit" onclick=exitAccount()>SAIR</button>
-    
+    <div class="right-side">
+        <dotlottie-player
+            src="https://lottie.host/80baefe1-e8b8-4ac5-890d-7e1e803d1404/oLKNT80HH3.json"
+            background="transparent"
+            speed="1"
+            style="width: 500px; height: 700px;"
+            loop
+            autoplay
+        ></dotlottie-player>
+    </div>
 </body>
 </html>
