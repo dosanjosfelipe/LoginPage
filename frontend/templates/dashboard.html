@@ -13,6 +13,7 @@
         type="module"
     ></script>
     <script src="../static/script/main.js"></script>
+    <script src="../static/script/api.js"></script>
 
     <header>
         <div class="logo">
@@ -22,10 +23,17 @@
     </header>
     <div class="left-side">
         <h1>Seja bem-vindo(a) <span id="userName"></span>!</h1>
-        <h2>Obrigado por testar! <a href="https://github.com/dosanjosfelipe/LoginPage">Clique aqui para abrir esse projeto no github.</a></h2>
+        <h2>Obrigado por testar! <a href="https://github.com/dosanjosfelipe/LoginPage" target="_blank">Clique aqui para abrir esse 
+            projeto no github.</a></h2>
         <div class="links">
-                <button id="exit" onclick=exitAccount()>Sair</button>
+            <button id="exit" onclick="exitAccount()">Sair</button>
+            <button id="showData" onclick="getUserData()">Mostrar dados</button>
         </div>
+        <span class="userData">
+            <div id="userData1"></div>
+            <div id="userData2"></div>
+            <div id="userData3"></div>
+        </span>
     </div>
     <div class="right-side">
         <dotlottie-player

@@ -1,6 +1,14 @@
 window.addEventListener("DOMContentLoaded", async () => {
     const currentPath = window.location.pathname;
-    const jwtToken = getCookie("jwt_auth_token");
+    let jwtToken = null;
+
+    if (localStorage.getItem("token")) {
+        jwtToken = localStorage.getItem("token");
+    }
+
+    if (sessionStorage.getItem("token")) {
+        jwtToken = sessionStorage.getItem("token");
+    }
 
     if (currentPath === "/frontend/templates/dashboard.html") {
         if (!jwtToken || !getCookie("user_name")) {
@@ -21,9 +29,9 @@ window.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        const userEmail = document.getElementById("userEmail")
+        const userEmail = document.getElementById("userEmail");
         if (userEmail) {
-            userEmail.textContent =  decodeURIComponent(getCookie("user_email"));
+            userEmail.textContent = decodeURIComponent(getCookie("user_email"));
         }
     } else {
         if (jwtToken) {
@@ -33,7 +41,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 function exitAccount() {
-    document.cookie = "jwt_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.removeItem('token');
     document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "changing_password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = "/frontend/templates/login.html";

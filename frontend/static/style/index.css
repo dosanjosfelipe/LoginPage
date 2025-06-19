@@ -122,15 +122,20 @@ a {
     font-size: 17px;
     transition: background-color 0.3s ease;
     border: transparent;
+    cursor: pointer;
 }
 
-.links a:hover {
+.links a:hover, button:hover {
     background-color: #1d53a0;
 }
 
 span {
     color: #2468c7;
     font-weight: 700;
+}
+
+.userData {
+    margin-top: 25px;
 }
 
 /* Responsivo para telas menores */

@@ -37,6 +37,16 @@ async function sendLoginData(email, password, rememberMe) {
         });
 
         if (res.status === 200) {
+            const data = await res.json(); 
+            const rememberMeActive2 = data.rememberMeActive;
+            const token = data.jwt_auth_token;
+
+            if (!rememberMeActive2) {
+                sessionStorage.setItem('token', token);
+            } else {
+                localStorage.setItem('token', token);
+            }
+
             window.location.href = "/frontend/templates/dashboard.html";
         } else if (res.status === 401) {
             alert("Email ou senha incorretos.");
@@ -128,22 +138,59 @@ async function sendNewPasswordData(newPassword) {
 }
 
 
-async function sendJwtTokenData(jwtToken) {
+async function sendJwtTokenData() {
     const URL = "http://localhost:8080/autoLogin";
-    const data = { jwtToken };
 
     try {
         const res = await fetch(URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            method: "GET",
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json" 
+            },
             credentials: "include"
         });
 
         if (res.status === 200) {
             window.location.href = "/frontend/templates/dashboard.html";
+        } else if (res.status === 401) {
+            console.log("ERRO 401")
+        } else {
+            console.log("ERRO:" + res.error)
         }
     } catch (error) {
         alert("ERRO: " + error.message);
+    }
+}
+
+async function getUserData() {
+    const URL = "http://localhost:8080/userData";
+
+    try {
+        const res = await fetch(URL, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.status === 201) {
+            const obj = await res.json();
+
+            const userData1 = document.getElementById("userData1");
+            const userData2 = document.getElementById("userData2");
+            const userData3 = document.getElementById("userData3");
+
+            userData1.textContent = "Nome: " + getCookie("user_name");
+            userData2.textContent = "Email: " + obj.email;
+            userData3.textContent = "Data de registro: " + obj.date;
+        } else {
+            const msg = await res.text();
+            alert(`Erro ${res.status}: ${msg}`);
+        }
+
+    } catch (error) {
+        alert("ERRO: Falha ao receber dados. " + error.message);
     }
 }

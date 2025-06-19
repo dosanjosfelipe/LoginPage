@@ -1,6 +1,7 @@
 package me.LoginPage.controller.auth;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,8 @@ public class RegisterController {
     @PostMapping
     public ResponseEntity<?> sendDatasToDB(@RequestBody RegisterUserDTO dto) 
             throws MessagingException, IOException {
+        
+        dto.setDate(LocalDate.now());
 
         boolean emailExists = userService.verifyUser(dto.getEmail());
 

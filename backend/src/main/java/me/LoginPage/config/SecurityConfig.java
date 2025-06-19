@@ -33,8 +33,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize.requestMatchers(
-                    "/login", "/register", "/resetPassword", "/newPassword", "/autoLogin",
-                    "/token", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
+                    "/login", "/register", "/resetPassword", "/newPassword",
+                    "/token" ,"/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
                     "/frontend/templates/**"
                 ).permitAll().anyRequest().authenticated()
             ).addFilterBefore(jwtAuthenticationFilter,
@@ -46,7 +46,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5500"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5501"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

@@ -1,5 +1,7 @@
 package me.LoginPage.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,16 @@ public class UserDB {
 
     private String password;
 
+    private LocalDate date;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public Long getId() {return id;}
 
     public String getName() {return name;}
@@ -33,5 +45,6 @@ public class UserDB {
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
+
 
 }

@@ -57,14 +57,14 @@ public class LoginController {
         }
 
         String token = jwtToken.generateToken(dto.getEmail());
+        boolean rememberMe = dto.getRememberMe() ? true : false;
         int maxAge = dto.getRememberMe() ? 7889280 : -1;
 
-        CookieService.setCookie(response, "jwt_auth_token", token, maxAge);
         CookieService.setCookie(response, "user_name", user.getName(), maxAge);
 
         return ResponseEntity.ok(Map.of(
-            "message", "Login realizado com sucesso",
-            "userName", user.getName()
+            "rememberMeActive", rememberMe,
+            "jwt_auth_token", token
         ));
     }
 }

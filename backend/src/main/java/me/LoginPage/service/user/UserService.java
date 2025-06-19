@@ -26,6 +26,8 @@ public class UserService {
     // Salvar usuário no banco de dados
     public void saveUser(RegisterUserDTO dto) {
         UserDB user = registerUserMapper.dtoToEntity(dto);
+        user.setDate(dto.getDate());
+        
         userRepository.save(user);
     }
 
