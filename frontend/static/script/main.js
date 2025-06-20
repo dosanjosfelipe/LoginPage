@@ -41,9 +41,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 function exitAccount() {
-    localStorage.removeItem('token');
     document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "changing_password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    if (localStorage.getItem("token")) {
+        localStorage.removeItem("token")
+    }
+
+    if (sessionStorage.getItem("token")) {
+        sessionStorage.removeItem("token")
+    }
+    
     window.location.href = "/frontend/templates/login.html";
 }
 

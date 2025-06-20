@@ -20,7 +20,7 @@ public class PasswordResetToken {
     private String token;
 
     @OneToOne
-    private UserDB user;
+    private Users user;
 
     @Future
     private LocalDateTime expirationDate;
@@ -28,8 +28,8 @@ public class PasswordResetToken {
     public String getToken() {return token;}
     public void setToken(String token) {this.token = token;}
 
-    public UserDB getUser() {return user;}
-    public void setUser(UserDB user) {this.user = user;}
+    public Users getUser() {return user;}
+    public void setUser(Users user) {this.user = user;}
 
     public LocalDateTime getExpirationDate() {return expirationDate;}
     public void setExpirationDate(LocalDateTime expirationDate) {this.expirationDate = expirationDate;}

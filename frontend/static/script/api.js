@@ -166,11 +166,20 @@ async function sendJwtTokenData() {
 async function getUserData() {
     const URL = "http://localhost:8080/userData";
 
+    let tokenJwt = null;
+    if (localStorage.getItem("token")) {
+        tokenJwt = localStorage.getItem("token");
+    }
+
+    if (sessionStorage.getItem("token")) {
+        tokenJwt = sessionStorage.getItem("token");
+    }
+
     try {
         const res = await fetch(URL, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                'Authorization': `Bearer ${tokenJwt}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -190,6 +199,38 @@ async function getUserData() {
             alert(`Erro ${res.status}: ${msg}`);
         }
 
+    } catch (error) {
+        alert("ERRO: Falha ao receber dados. " + error.message);
+    }
+}
+
+async function deleteAcc() {
+    const URL = "http://localhost:8080/deleteAcc"
+
+    let tokenJwt = null
+    if (localStorage.getItem("token")) {
+        tokenJwt = localStorage.getItem("token");
+    }
+
+    if (sessionStorage.getItem("token")) {
+        tokenJwt = sessionStorage.getItem("token");
+    }
+
+    try {
+        const res = await fetch(URL, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${tokenJwt}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.status === 200) {
+            exitAccount()
+            alert("Sua conta foi deletada.")
+        } else {
+            alert("ERRO: Não conseguimos deletar sua conta: " + res.status)
+        }
     } catch (error) {
         alert("ERRO: Falha ao receber dados. " + error.message);
     }

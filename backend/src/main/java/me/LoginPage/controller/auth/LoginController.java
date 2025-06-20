@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 import me.LoginPage.dto.auth.LoginDTO;
-import me.LoginPage.model.UserDB;
+import me.LoginPage.model.Users;
 import me.LoginPage.repository.UserRepository;
 import me.LoginPage.service.cookie.CookieService;
 import me.LoginPage.service.user.UserService;
 import me.LoginPage.util.jwt.JwtToken;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -42,14 +41,15 @@ public class LoginController {
 
     // Chama a função de verificar o usuário e criar token e retorna uma resposta para o frontend
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws UnsupportedEncodingException {
+    public ResponseEntity<?> login(@RequestBody LoginDTO dto, HttpServletResponse response) 
+        throws UnsupportedEncodingException {
 
-        Optional<UserDB> userOpt = userRepository.findByEmail(dto.getEmail());
+        Optional<Users> userOpt = userRepository.findByEmail(dto.getEmail());
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha incorretos.");
         }
 
-        UserDB user = userOpt.get();
+        Users user = userOpt.get();
         String hashedPassword = user.getPassword();
 
         if (!passwordEncoder.matches(dto.getPassword(), hashedPassword)) {
@@ -57,6 +57,7 @@ public class LoginController {
         }
 
         String token = jwtToken.generateToken(dto.getEmail());
+        
         boolean rememberMe = dto.getRememberMe() ? true : false;
         int maxAge = dto.getRememberMe() ? 7889280 : -1;
 

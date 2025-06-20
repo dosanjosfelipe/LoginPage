@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 import me.LoginPage.dto.recoveryPassword.NewPasswordDTO;
-import me.LoginPage.model.UserDB;
+import me.LoginPage.model.Users;
 import me.LoginPage.repository.PasswordResetTokenRepos;
 import me.LoginPage.repository.UserRepository;
 import me.LoginPage.service.cookie.CookieService;
@@ -58,7 +58,7 @@ public class NewPasswordController {
                     .body(Map.of("message", "Valor do cookie 'UserId' inválido"));
         }
 
-        Optional<UserDB> userOpt = userRepository.findById(userId);
+        Optional<Users> userOpt = userRepository.findById(userId);
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("message", "Usuário não encontrado."));

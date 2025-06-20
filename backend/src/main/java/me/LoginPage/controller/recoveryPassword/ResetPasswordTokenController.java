@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletResponse;
 import me.LoginPage.dto.recoveryPassword.ResetPasswordTokenDTO;
 import me.LoginPage.model.PasswordResetToken;
-import me.LoginPage.model.UserDB;
+import me.LoginPage.model.Users;
 import me.LoginPage.repository.PasswordResetTokenRepos;
 import me.LoginPage.repository.UserRepository;
 import me.LoginPage.service.cookie.CookieService;
@@ -58,7 +58,7 @@ public class ResetPasswordTokenController {
                     .body(Map.of("message", "Token expirado."));
         }
 
-        Optional<UserDB> tokenUser = userRepository.findById(token.getUser().getId());
+        Optional<Users> tokenUser = userRepository.findById(token.getUser().getId());
         if (tokenUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", "Usuário do token não encontrado."));

@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import me.LoginPage.model.UserDB;
+import me.LoginPage.model.Users;
 import me.LoginPage.dto.recoveryPassword.ResetPasswordDTO;
 import me.LoginPage.model.PasswordResetToken;
 import me.LoginPage.repository.UserRepository;
@@ -24,7 +24,7 @@ public class PasswordResetTokenService {
     
     tokenRepository.deleteAllExpiredTokens();
 
-    UserDB user = userRepository.findByEmail(dto.getEmail())
+    Users user = userRepository.findByEmail(dto.getEmail())
         .orElseThrow(() -> new UsernameNotFoundException("Usuário com e-mail " + dto.getEmail() + " não encontrado."));
 
     SecureRandom random = new SecureRandom();

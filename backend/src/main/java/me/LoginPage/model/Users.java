@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 //Tabela de usuários no banco de dados
 @NoArgsConstructor
 @Entity
-public class UserDB {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

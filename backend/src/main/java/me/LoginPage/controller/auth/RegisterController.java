@@ -14,7 +14,6 @@ import jakarta.mail.MessagingException;
 import me.LoginPage.dto.auth.RegisterUserDTO;
 import me.LoginPage.service.email.EmailService;
 import me.LoginPage.service.user.UserService;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController

@@ -21,9 +21,6 @@ public class JwtToken {
     private Long expirationTime;
 
     private Key getSigningKey() {
-        if (secret.length() < 32) {
-            throw new IllegalArgumentException("JWT secret key must be at least 32 characters long.");
-        }
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
@@ -31,12 +28,8 @@ public class JwtToken {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationTime);
 
-        return Jwts.builder()
-                .setSubject(userEmail)
-                .setIssuedAt(now)
-                .setExpiration(expiration)
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
+        return Jwts.builder().setSubject(userEmail).setIssuedAt(now).setExpiration(expiration).signWith(getSigningKey(),
+            SignatureAlgorithm.HS256).compact();
     }
 
     public boolean isTokenValid(String token) {
@@ -53,9 +46,6 @@ public class JwtToken {
     }
 
     private Jws<Claims> parseClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token);
+        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
     }
 }
