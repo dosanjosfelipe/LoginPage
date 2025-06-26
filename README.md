@@ -10,8 +10,8 @@ Inclui funcionalidades como:
 - Registro de novos usuários
 - Login com autenticação via token JWT
 - Armazenamento seguro de senhas com hashing
-- Logout e gerenciamento de sessão
-- Implementação opcional de "Lembrar-me" com cookies persistentes
+- Logout e visualização de dados.
+- Implementação opcional de "Lembrar-me" com LocalStorage
 
 ## 💻 Tecnologias Utilizadas
 
@@ -41,7 +41,7 @@ Inclui funcionalidades como:
 
 - As senhas são armazenadas no banco com criptografia (`BCrypt`)
 - Sessões de usuário expiram ao fechar o navegador (ou após X tempo)
-- O botão "Lembrar-me" cria cookies persistentes (opcional)
+- O botão "Lembrar-me" cria LocalStorage persistente (opcional)
 
 ## 🚀 Como Executar
 
@@ -67,11 +67,8 @@ cd LoginPage
 4. Abra frontend/templates/login.html no navegador
 Para uma experiência ideal, é recomendável servir o frontend via um servidor estático ou integrá-lo ao Spring Boot.
 
-
-
-
 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-👨‍💻 Autor
+👨‍💻 Autor:
 Felipe dos Anjos
